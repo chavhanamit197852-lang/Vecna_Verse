@@ -9,6 +9,7 @@ import Registration from "@/models/Registration";
 import ClubMember from "@/models/ClubMember";
 import RegisterButton from "@/components/RegisterButton";
 import JoinClubButton from "@/components/JoinClubButton";
+import Club from "@/models/Club";
 import MapWrapper from "@/components/MapWrapper"; // Import the Map
 
 function formatDate(d) {

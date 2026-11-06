@@ -18,6 +18,9 @@ import {
   ShieldCheck,
   GraduationCap,
 } from "lucide-react";
+import Community from "@/models/Community";
+import CommunityMember from "@/models/CommunityMember";
+import CommunityJoinButton from "@/components/CommunityJoinButton";
 
 import { dbConnect } from "@/lib/db";
 import EventCarousel from "@/app/EventCarousel";
@@ -28,7 +31,7 @@ import ClubMember from "@/models/ClubMember";
 import SponsorAd from "@/models/SponsorAd";
 import ClubAdSpotlight from "@/components/ClubAdSpotlight";
 import JoinClubButton from "@/components/JoinClubButton";
-import CircularCarousel from "@/components/CircularCarousel";
+
 
 function safeExternalUrl(value) {
   try {
@@ -48,13 +51,14 @@ async function getHomeData() {
 
     const now = new Date();
 
-    const [
-      events,
-      sponsors,
-      clubs,
-      users,
-      featuredClubs,
-    ] = await Promise.all([
+   const [
+  events,
+  sponsors,
+  clubs,
+  users,
+  featuredClubs,
+  communities,
+] = await Promise.all([
 
       Event.find({
         $and: [
@@ -120,7 +124,7 @@ async function getHomeData() {
     return {
       events: JSON.parse(JSON.stringify(events)),
       sponsors: safeSponsors,
-      clubs: JSON.parse(JSON.stringify(featuredClubs)),
+      clubs: JSON.parse(JSON.stringify(featuredClubs,)),
       stats: {
         clubs,
         users,
