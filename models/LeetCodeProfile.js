@@ -1,0 +1,3 @@
+import mongoose from "mongoose";
+const LeetCodeProfileSchema = new mongoose.Schema({userId:{type:mongoose.Schema.Types.ObjectId,ref:"User",required:true,unique:true,index:true},handle:{type:String,required:true,trim:true,index:true},totalSolved:{type:Number,default:0,min:0},easySolved:{type:Number,default:0,min:0},mediumSolved:{type:Number,default:0,min:0},hardSolved:{type:Number,default:0,min:0},rating:{type:Number,default:0,min:0},ranking:{type:Number,default:0,min:0},source:{type:String,enum:["DEMO","USER_SUBMITTED","VERIFIED_API"],default:"DEMO"},evidenceUrl:{type:String,default:""},lastSyncedAt:{type:Date,default:null}},{timestamps:true});
+export default mongoose.models.LeetCodeProfile || mongoose.model("LeetCodeProfile",LeetCodeProfileSchema);
