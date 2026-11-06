@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { z } from "zod";
 import { dbConnect } from "@/lib/db";
-import { requireCommitteeOrAbove } from "@/lib/permissions";
+// import { requireCommitteeOrAbove } from "@/lib/permissions";
+import { requireClubMembership } from "@/lib/permissions";
 import Registration from "@/models/Registration";
 import User from "@/models/User";
 
@@ -28,7 +29,7 @@ export async function POST(req) {
 
   if (ticket.eventId.clubId) {
     // Only COMMITTEE / club ADMIN (or platform ADMIN) may scan — plain MEMBERs may not.
-    const access = await requireCommitteeOrAbove(ticket.eventId.clubId);
+     const access = await requireClubMembership(ticket.eventId.clubId);
     if (access.error) return access.error;
   } else {
     if (!["ADMIN", "CLUB_ADMIN"].includes(session.user.role)) {
