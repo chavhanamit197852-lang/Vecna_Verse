@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 import { dbConnect } from "@/lib/db";
-
+import EventCarousel from "@/app/EventCarousel";
 import Event from "@/models/Event";
 import User from "@/models/User";
 import Club from "@/models/Club";
@@ -29,9 +29,6 @@ import SponsorAd from "@/models/SponsorAd";
 import ClubAdSpotlight from "@/components/ClubAdSpotlight";
 import JoinClubButton from "@/components/JoinClubButton";
 import CircularCarousel from "@/components/CircularCarousel";
-// --------------------------------------------------
-// DATABASE
-// --------------------------------------------------
 
 function safeExternalUrl(value) {
   try {
@@ -210,6 +207,7 @@ function getCategoryClass(category) {
 // --------------------------------------------------
 
 export default async function Home() {
+  
   const [session, homeData] = await Promise.all([auth(), getHomeData()]);
   const {
     events,
@@ -598,35 +596,10 @@ export default async function Home() {
           {events.length > 0 ? (
 
             <div className="grid gap-5 md:grid-cols-3">
-              {
-                events.map((event, index) => (<CircularCarousel
-    items={events}
-    preset="cylinder"
-    intro="rise"
-    cardWidth={220}
-    aspectRatio={1}
-    speed={14}
-    captions={false}
-    gap={25}
-    tilt={-5}
-    curve={1}
-    perspective={2500}
-    autoplay="drift"
-    interval={3}
-    direction="left"
-    momentum={0.6}
-    snap
-    pauseOnHover
-    focusOnClick
-    draggable
-    parallax={0.3}
-    stretch={0.5}
-    fadeColor="#000000"
-    depthFade={0.55}
-    innerShade={0.6}
-    cornerRadius={12}
-/>))
-              }
+         
+ <EventCarousel events={events} />
+
+              
 
               {events.slice(0, 3).map((event, index) => (
                 <EventCard
