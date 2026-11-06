@@ -49,9 +49,10 @@ export default function EventMap({ events }) {
         scrollWheelZoom={false} // Prevents page scrolling from getting stuck on the map
         style={{ height: "100%", width: "100%", background: "#121214" }}
       >
-       <TileLayer
-  url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-  attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      // components/EventMap.jsx AND components/LocationPicker.jsx
+<TileLayer
+  url="https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+  attribution='Tiles &copy; Esri'
 />
 
         {events.map((event) => {

@@ -870,3 +870,35 @@ body { overflow-x: hidden; }
     animation: none !important;
   }
 }
+
+.industrial-input {
+  width: 100%;
+  border: 1px solid #b9b9b4;
+  background: #e8e8e5;
+  padding: 13px 14px;
+  color: #171717;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.industrial-input::placeholder {
+  color: #999994;
+}
+
+.industrial-input:focus {
+  border-color: #a1bd31;
+  background: #f0f0eb;
+}
+
+.industrial-record {
+  border: 1px solid #c4c4c0;
+  background: #dededb;
+  padding: 20px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.industrial-record:hover {
+  border-color: #a2bb3a;
+  background: #e5e5e0;
+}
