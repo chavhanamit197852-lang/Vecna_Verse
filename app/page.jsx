@@ -18,10 +18,8 @@ import {
   ShieldCheck,
   GraduationCap,
 } from "lucide-react";
-import Community from "@/models/Community";
-import CommunityMember from "@/models/CommunityMember";
-import CommunityJoinButton from "@/components/CommunityJoinButton";
-
+import AlbumRail from "@/components/AlbumRail";
+import ScrollStack, { ScrollStackItem } from '@/components/ScrollStack'
 import { dbConnect } from "@/lib/db";
 import EventCarousel from "@/app/EventCarousel";
 import Event from "@/models/Event";
@@ -599,21 +597,11 @@ export default async function Home() {
 
           {events.length > 0 ? (
 
-            <div className="grid gap-5 md:grid-cols-3">
-         
- <EventCarousel events={events} />
-
-              
-
-              {events.slice(0, 3).map((event, index) => (
-                <EventCard
-                  key={String(event._id)}
-                  event={event}
-                  index={index}
-                />
-              ))}
-
-            </div>
+           <div className="mx-auto flex w-full justify-center">
+  <div className="w-full max-w-5xl">
+    <AlbumRail albums={events} />
+  </div>
+</div>
 
           ) : (
 
@@ -662,40 +650,65 @@ export default async function Home() {
 
           {clubs.length ? (
             <div className="grid gap-5 md:grid-cols-3">
-              {clubs.map((club) => {
-                const membership = clubMembershipMap.get(String(club._id));
-                return (
-                  <article key={String(club._id)} className="flex flex-col rounded-[26px] border border-[#42553B]/10 bg-white p-6 shadow-[0_12px_35px_rgba(35,53,37,0.05)]">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8EEDB] text-lg font-black text-[#4A5D4E]">
-                        {club.name?.[0]?.toUpperCase() || "C"}
-                      </div>
-                      <span className="rounded-full bg-[#EFF3E8] px-3 py-1.5 text-[9px] font-black uppercase tracking-wider text-[#4A5D4E]">
-                        {club.membershipFee > 0 ? `₹${club.membershipFee} membership` : "Free to join"}
-                      </span>
-                    </div>
-                    <h3 className="mt-5 text-xl font-black text-[#263C2C]">{club.name}</h3>
-                    <p className="mt-1 text-xs font-semibold text-[#89907D]">{club.institution}{club.city ? ` · ${club.city}` : ""}</p>
-                    <p className="mt-4 flex items-center gap-2 text-xs text-[#79806B]">
-                      <Users size={14} /> {clubCountMap.get(String(club._id)) || 0} active members
-                    </p>
-                    <div className="mt-auto pt-5">
-                      <JoinClubButton
-                        clubId={String(club._id)}
-                        isAuthenticated={Boolean(session?.user)}
-                        membership={membership ? {
-                          id: String(membership._id),
-                          status: membership.status,
-                          role: membership.role,
-                          membershipFee: membership.membershipFee,
-                          paymentStatus: membership.paymentStatus,
-                        } : null}
-                      />
-                    </div>
-                  </article>
-                );
-              })}
+            {/* <ScrollStack> */}
+  {clubs.map((club) => {
+    const membership = clubMembershipMap.get(String(club._id));
+
+    return (
+      // <ScrollStackItem key={String(club._id)}>
+        <div style={{ height: 300 }}>
+          <article className="flex h-full flex-col rounded-[26px] border border-[#42553B]/10 bg-white p-6 shadow-[0_12px_35px_rgba(35,53,37,0.05)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8EEDB] text-lg font-black text-[#4A5D4E]">
+                {club.name?.[0]?.toUpperCase() || "C"}
+              </div>
+
+              <span className="rounded-full bg-[#EFF3E8] px-3 py-1.5 text-[9px] font-black uppercase tracking-wider text-[#4A5D4E]">
+                {club.membershipFee > 0
+                  ? `₹${club.membershipFee} membership`
+                  : "Free to join"}
+              </span>
             </div>
+
+            <h3 className="mt-5 text-xl font-black text-[#263C2C]">
+              {club.name}
+            </h3>
+
+            <p className="mt-1 text-xs font-semibold text-[#89907D]">
+              {club.institution}
+              {club.city ? ` · ${club.city}` : ""}
+            </p>
+
+            <p className="mt-4 flex items-center gap-2 text-xs text-[#79806B]">
+              <Users size={14} />
+              {clubCountMap.get(String(club._id)) || 0} active members
+            </p>
+
+            <div className="mt-auto pt-5">
+              <JoinClubButton
+                clubId={String(club._id)}
+                isAuthenticated={Boolean(session?.user)}
+                membership={
+                  membership
+                    ? {
+                        id: String(membership._id),
+                        status: membership.status,
+                        role: membership.role,
+                        membershipFee: membership.membershipFee,
+                        paymentStatus: membership.paymentStatus,
+                      }
+                    : null
+                }
+              />
+            </div>
+          </article>
+        </div>
+      
+    );
+  })}
+{/* </ScrollStack> */}
+            </div>
+            
           ) : (
             <EmptyPanel
               title="Your campus community starts here."
